@@ -11,6 +11,8 @@ let abortControllers = new Set()
 let toResume = new Set()
 let deployTime, prefetchFullRampUpTime
 
+const appShellPath = '/.app-shell'
+
 try {
   // injected via webpack client build
   deployTime = parseInt('{{deployTime}}')
@@ -73,6 +75,7 @@ function precacheLinks(response) {
  * the webpack client build
  */
 function isPrefetchRampedUp() {
+  return false
   const timeSinceDeploy = new Date().getTime() - deployTime
 
   if (timeSinceDeploy >= prefetchFullRampUpTime) {
@@ -98,7 +101,7 @@ function cachePath({ path, apiVersion } = {}, cacheLinks) {
   return caches.open(cacheName).then(cache => {
     cache.match(path).then(match => {
       if (!match) {
-        if (!isPrefetchRampedUp()) {
+        if (!isPrefetchRampedUp() && path !== appShellPath) {
           console.log(
             '[react-storefront service worker]',
             `skipping prefetch of ${path}, not yet ramped up.`
@@ -357,9 +360,8 @@ function offlineResponse(apiVersion, context) {
     })
   } else {
     // If not API request, find and send app shell
-    const path = '/.app-shell'
-    const cacheName = getAPICacheName(apiVersion, path)
-    const req = new Request(path)
+    const cacheName = getAPICacheName(apiVersion, appShellPath)
+    const req = new Request(appShellPath)
     return caches.open(cacheName).then(cache => cache.match(req))
   }
 }
