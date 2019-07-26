@@ -75,7 +75,6 @@ function precacheLinks(response) {
  * the webpack client build
  */
 function isPrefetchRampedUp() {
-  return false
   const timeSinceDeploy = new Date().getTime() - deployTime
 
   if (timeSinceDeploy >= prefetchFullRampUpTime) {
