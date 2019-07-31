@@ -1,27 +1,24 @@
 import React, { Component } from 'react'
 import { inject, observer } from 'mobx-react'
 import Container from 'react-storefront/Container'
-import Typography from '@material-ui/core/Typography'
 import Row from 'react-storefront/Row'
-import CmsSlot from 'react-storefront/CmsSlot'
 
-@inject('app')
+import PersonalizedBannerSlot from '../content/PersonalizedBannerSlot';
+
+@inject(({ app }) => ({ app: app, pageContent: app.pageContent }))
 @observer
 export default class Home extends Component {
   render() {
-    const { app } = this.props
+    const { pageContent } = this.props
 
     return (
-      <Container>
-        <Row>
-          <Typography variant="h4">React Storefront</Typography>
-        </Row>
-        <Row>
-          <Typography variant="subtitle1">
-            <CmsSlot>{app.welcomeMessage}</CmsSlot>
-          </Typography>
-        </Row>
-      </Container>
+      <div>
+        <PersonalizedBannerSlot content={pageContent.content.get('hero')}></PersonalizedBannerSlot>
+        <Container>
+          <Row>
+          </Row>
+        </Container>
+      </div>
     )
   }
 }

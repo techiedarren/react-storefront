@@ -6,6 +6,7 @@
     "author": "",
     "license": "UNLICENSED",
     "dependencies": {
+        "dc-delivery-sdk-js": "^0.2.0",
         "moov_perf": "1.2.5",
         "moov_rewriter": "^4.0.1",
         "moov_stdlib": "^2.6.33",

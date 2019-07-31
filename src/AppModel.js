@@ -4,6 +4,7 @@ import CartModel from './cart/CartModel'
 import CategoryModel from './category/CategoryModel'
 import SubcategoryModel from './subcategory/SubcategoryModel'
 import ProductModel from './product/ProductModel'
+import PageContentModel from './content/PageContentModel'
 
 const AppModel = types.compose(
   AppModelBase,
@@ -12,7 +13,8 @@ const AppModel = types.compose(
     cart: types.optional(CartModel, {}),
     category: types.maybeNull(CategoryModel),
     subcategory: types.maybeNull(SubcategoryModel),
-    product: types.maybeNull(ProductModel)
+    product: types.maybeNull(ProductModel),
+    pageContent: types.maybeNull(PageContentModel)
   })
 )
 
